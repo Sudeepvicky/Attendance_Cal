@@ -589,10 +589,23 @@ def update_subjects(request):
             if k1 != 'percentage':
                 d1.update({k1:v1})
         data.update({k:d1})
+    # print('\n\n')
+    attend = 0 
+    total = 0 
+    for k,v in data.items():
+        if k != 'total':
+            attend += v['attend']
+            total += v['total'] 
+
+    data['total']['attend'] = attend
+    data['total']['total'] = total
+            
+    # print('\n\n')
     if int(streak) > 0:
         sub = {'show':data,'sem':semester,'streak':streak,'cls':'cls'} 
     else:
         sub = {'show':data,'sem':semester,'streak':streak}   
+    # print(f'\n\n\n\n{sub}\n\n\n')
     return render(request,'update_subjects.html',sub) 
 
 def update_sem_subjects(request):
@@ -606,6 +619,18 @@ def update_sem_subjects(request):
             if k1 != 'percentage':
                 d1.update({k1:v1})
         data.update({k:d1}) 
+    # attend = 0 
+    # total = 0 
+    # for k,v in data.items():
+    #     if k != 'total':
+    #         attend += v['attend']
+    #         total += v['total'] 
+
+    data['total']['attend'] = 0
+    data['total']['total'] = 0
+
+    # print(f'\n\n\n attend = {attend}, total = {total} \n\n\n{data} \n\n\n') 
+
     attended_periods = data['total']['attend']
     total_periods = data['total']['total']    
     temp_attended_periods = attended_periods

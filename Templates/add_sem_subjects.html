@@ -345,9 +345,9 @@ button:hover{
       {% endfor %}
       </div>
         <div class="content">
-            <p>Press enter or add a comma after each Subject</p>
+            <p>Press enter or coma after each Subject</p>
             <input type="text" id="semester" placeholder="Enter current semester" maxlength="16">
-            <ul><input type="text" spellcheck="false" id="tags" maxlength="12"></ul>
+            <ul><input type="text" spellcheck="false" id="tags" minlength="2"></ul>
             <form action="add_subjects" method="post">
             <input type="hidden" id="ip" value="" name="subjects">
             <input type="hidden" id="ip1" value="" name="semester">
@@ -405,8 +405,11 @@ function addTag(e){
         if(tag.length > 1 && !tags.includes(tag)){
             if(tags.length < 25){
                 tag.split(',').forEach(tag => {
-                    tags.push(tag);
-                    createTag();
+                    if(tag.trim() != ''){
+                      tags.push(tag.trim()); 
+                      createTag();
+                    }
+                    
                 });
             }
         }
